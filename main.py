@@ -40,7 +40,7 @@ def mongodb_connection():
 def mongodb_close(client):
     client.close()
 
-
+gIssueCourts = []
 def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     record = {
         'Reporter_Citation': '',
@@ -164,7 +164,10 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     if docket is None: return None
     court = get_jsondata_from_url(docket['court'])
     if court is None:
-        print(_id, 'Error - Not found courts json file.', docket['court'])
+        # print(_id, 'Error - Not found courts json file.', docket['court'])
+        if docket['court'] not in gIssueCourts:
+            gIssueCourts.append(docket['court'])
+        record['Court'] = ''
     else:
         record['Court'] = court['full_name']
 
@@ -275,6 +278,8 @@ def main():
             break
     print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
     print('Processing Bulk Opinions data..... Completed .....')
+    print('----- ISSUE COURTS -----')
+    pprint(gIssueCourts)
     mongodb_close(mongoclient)
 
 if __name__ == "__main__":

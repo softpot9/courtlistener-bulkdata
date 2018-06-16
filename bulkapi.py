@@ -8,7 +8,8 @@ def get_jsondata_from_id(stype, _id):
             data = json.load(f)
         return data
     except Exception as e:
-        print('Load JSON ERROR: ', str(e))
+        # print('Load JSON ERROR: ', str(e))
+        pass
     return None
 
 
