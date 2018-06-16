@@ -196,7 +196,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
     try:
         record['Party2'] = docket['case_name'].split("v.", 1)[1].lstrip()
-    except Exception, e:
+    except Exception as e:
         record['Party2'] = ''
         # print('Getting Party2 Error - not found "v." Invalid Format: ', docket['case_name'])
         # print(str(e))
@@ -217,7 +217,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     try:
         datetime_object = datetime.strptime(cluster['date_filed'], '%Y-%m-%d')
         tmpdatefiled = datetime_object.strftime('%B %d,%Y')
-    except Exception, e:
+    except Exception as e:
         print('Error - Invalid Date Format. should be %Y-%m-%d. ex:1990-09-23: ', cluster['date_filed'])
         print(str(e))
         tmpdatefiled = ''
