@@ -260,8 +260,8 @@ def main():
         _id = v.split('.')[0]
         newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
         if newrecord is None:
-            print('Error - Not found json file. stopped scrip running')
-            break
+            print('Error - Not found json file. skip it', _id)
+            # break
         else:
             db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
 
