@@ -16,8 +16,8 @@ from bulkapi import get_jsondata_from_id, get_jsondata_from_url
 """
 def mongodb_connection():
     dbuser = BaseConfig.MONGODB_USER
-    # dbpasswd = urllib.parse.quote(BaseConfig.MONGODB_PWD, safe='')
-    dbpasswd = urllib.quote_plus(BaseConfig.MONGODB_PWD)
+    dbpasswd = urllib.parse.quote(BaseConfig.MONGODB_PWD, safe='')
+    # dbpasswd = urllib.quote_plus(BaseConfig.MONGODB_PWD)
     if BaseConfig.IS_LOCAL_DB:
         if dbuser == '':
             client = MongoClient('mongodb://' + BaseConfig.MONGODB_HOSTNAME)
