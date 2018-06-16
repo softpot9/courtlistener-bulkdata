@@ -20,7 +20,7 @@ class BaseConfig(object):
     MONGODB_USER = ''
     MONGODB_PWD = ''
     MONGODB_DBNAME = 'ExemptDB'
-    MONGODB_COLLECTION = 'TEST'
+    MONGODB_COLLECTION = 'ExemtCases'
 
     CITATIONS_CSV_FILEPATH = 'bulk-data/citations/citations.all.csv'
     # CITATIONS_CSV_FILEPATH = 'example.csv'
