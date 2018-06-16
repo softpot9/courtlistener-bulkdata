@@ -1,0 +1,7 @@
+*.pyc
+bulk-data/citations
+bulk-data/clusters
+bulk-data/courts
+bulk-data/dockets
+bulk-data/opinions
+bulk-data/people
