@@ -163,8 +163,10 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     docket = get_jsondata_from_url(cluster['docket'])
     if docket is None: return None
     court = get_jsondata_from_url(docket['court'])
-    if court is None: return None
-    record['Court'] = court['full_name']
+    if court is None:
+        print('Error - Not found courts json file.', docket['court'])
+    else:
+        record['Court'] = court['full_name']
 
     record['Title'] = docket['case_name']
 
@@ -177,7 +179,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
         record['Cited_No'] = dict_counts[str(idopinion)]
     else:
         record['Cited_No'] = 0
-        print('Getting Cited_No Error - Not found cited_opinion_id in CSV file: ', idopinion)
+        # print('Getting Cited_No Error - Not found cited_opinion_id in CSV file: ', idopinion)
 
     if opinion['html_with_citations'] is not None and opinion['html_with_citations'] != "":
         record['HTMLtext'] = opinion['html_with_citations']
@@ -196,8 +198,8 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
         record['Party2'] = docket['case_name'].split("v.", 1)[1].lstrip()
     except Exception, e:
         record['Party2'] = ''
-        print('Getting Party2 Error - not found "v." Invalid Format: ', docket['case_name'])
-        print(str(e))
+        # print('Getting Party2 Error - not found "v." Invalid Format: ', docket['case_name'])
+        # print(str(e))
 
     record['Case_No'] = docket['docket_number']
 
@@ -242,7 +244,6 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
 
 def main():
-
     dict_citations, dict_counts = read_titles_from_csv_file(BaseConfig.CITATIONS_CSV_FILEPATH)
     mongoclient, db = mongodb_connection()
 
@@ -257,7 +258,7 @@ def main():
     curpercent = 0
     for v in all_opinions_json_files:
         _id = v.split('.')[0]
-	print(_id)
+        print(_id)
         newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
         if newrecord is None:
             print('Error - Not found json file. stopped scrip running')
