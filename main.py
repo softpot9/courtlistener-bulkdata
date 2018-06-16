@@ -164,7 +164,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     if docket is None: return None
     court = get_jsondata_from_url(docket['court'])
     if court is None:
-        print('Error - Not found courts json file.', docket['court'])
+        print(_id, 'Error - Not found courts json file.', docket['court'])
     else:
         record['Court'] = court['full_name']
 
@@ -218,7 +218,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
         datetime_object = datetime.strptime(cluster['date_filed'], '%Y-%m-%d')
         tmpdatefiled = datetime_object.strftime('%B %d,%Y')
     except Exception, e:
-        print('Error - Invalid Date Format. should be %Y-%m-%d. ex:19990-09-23: ', cluster['date_filed'])
+        print('Error - Invalid Date Format. should be %Y-%m-%d. ex:1990-09-23: ', cluster['date_filed'])
         print(str(e))
         tmpdatefiled = ''
         datetime_object = None
@@ -258,7 +258,6 @@ def main():
     curpercent = 0
     for v in all_opinions_json_files:
         _id = v.split('.')[0]
-        print(_id)
         newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
         if newrecord is None:
             print('Error - Not found json file. stopped scrip running')
