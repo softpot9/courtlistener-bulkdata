@@ -1,0 +1,19 @@
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/kanag/",
+    "id": "kanag",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T20:06:01.719000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 362.21,
+    "citation_string": "Kan. Att'y Gen.",
+    "short_name": "Kansas Attorney General Reports",
+    "full_name": "Kansas Attorney General Reports",
+    "url": "http://ag.ks.gov/about-the-office/contact-us",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SAG"
+}

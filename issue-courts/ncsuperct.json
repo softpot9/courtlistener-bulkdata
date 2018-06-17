@@ -1,0 +1,19 @@
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/ncsuperct/",
+    "id": "ncsuperct",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T19:06:55.615000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 366.985,
+    "citation_string": "Sup. Ct. N.C.",
+    "short_name": "Superior Court of North Carolina",
+    "full_name": "Superior Court of North Carolina",
+    "url": "http://www.nccourts.org/Courts/Trial/Superior/",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SA"
+}

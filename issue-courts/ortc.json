@@ -1,0 +1,19 @@
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/ortc/",
+    "id": "ortc",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T19:29:41.433000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 367.11,
+    "citation_string": "Or. T.C.",
+    "short_name": "Oregon Tax Court",
+    "full_name": "Oregon Tax Court",
+    "url": "http://courts.oregon.gov/Tax/Pages/index.aspx",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SS"
+}

@@ -1,0 +1,19 @@
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/ncworkcompcom/",
+    "id": "ncworkcompcom",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T19:09:13.453000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 366.987,
+    "citation_string": "N.C. Indus. Comm.",
+    "short_name": "North Carolina Industrial Commission",
+    "full_name": "North Carolina Industrial Commission",
+    "url": "http://www.ic.nc.gov/",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SS"
+}

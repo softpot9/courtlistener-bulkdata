@@ -1,0 +1,19 @@
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/moag/",
+    "id": "moag",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T20:09:20.073000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 366.06,
+    "citation_string": "Mo. Att'y Gen.",
+    "short_name": "Missouri Attorney General Reports",
+    "full_name": "Missouri Attorney General Reports",
+    "url": "https://www.ago.mo.gov/",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SAG"
+}

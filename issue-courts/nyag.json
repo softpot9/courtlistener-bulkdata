@@ -1,0 +1,20 @@
+
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/nyag/",
+    "id": "nyag",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T20:10:41.828000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 366.968,
+    "citation_string": "N.Y. Att'y Gen.",
+    "short_name": "New York Attorney General Reports",
+    "full_name": "New York Attorney General Reports",
+    "url": "http://www.ag.ny.gov/",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SAG"
+}

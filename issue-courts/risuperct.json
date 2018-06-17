@@ -1,0 +1,19 @@
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/risuperct/",
+    "id": "risuperct",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T19:33:46.675000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 367.35,
+    "citation_string": "Sup. Ct. R.I.",
+    "short_name": "Superior Court of Rhode Island",
+    "full_name": "Superior Court of Rhode Island",
+    "url": "https://www.courts.ri.gov/Courts/SuperiorCourt/Pages/default.aspx",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SA"
+}
