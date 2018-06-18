@@ -11179,4 +11179,4 @@ Error - Not found json file. skip it 4172903
 100.00% : 4090283/4090283
 Processing Bulk Opinions data..... Completed .....
 ----- ISSUE COURTS -----
-['http://www.courtlistener.com/api/rest/v3/courts/wisag/']
+[]
