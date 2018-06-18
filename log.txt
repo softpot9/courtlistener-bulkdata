@@ -11179,23 +11179,4 @@ Error - Not found json file. skip it 4172903
 100.00% : 4090283/4090283
 Processing Bulk Opinions data..... Completed .....
 ----- ISSUE COURTS -----
-['http://www.courtlistener.com/api/rest/v3/courts/ncworkcompcom/',
- 'http://www.courtlistener.com/api/rest/v3/courts/texag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/arkag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/laag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/ortc/',
- 'http://www.courtlistener.com/api/rest/v3/courts/coloag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/flaag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/kingsbench/',
- 'http://www.courtlistener.com/api/rest/v3/courts/nyag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/moag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/calag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/ncsuperct/',
- 'http://www.courtlistener.com/api/rest/v3/courts/risuperct/',
- 'http://www.courtlistener.com/api/rest/v3/courts/nebag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/wisag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/kanag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/washag/',
- 'http://www.courtlistener.com/api/rest/v3/courts/mdag/',
- 'https://www.courtlistener.com:80/api/rest/v3/courts/risuperct/',
- 'https://www.courtlistener.com:80/api/rest/v3/courts/texag/']
+['http://www.courtlistener.com/api/rest/v3/courts/wisag/']
