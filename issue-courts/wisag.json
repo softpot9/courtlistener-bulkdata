@@ -1,1 +1,19 @@
-wisag
+{
+    "resource_uri": "https://www.courtlistener.com/api/rest/v3/courts/wisag/",
+    "id": "wisag",
+    "pacer_court_id": null,
+    "pacer_has_rss_feed": null,
+    "fjc_court_id": "",
+    "date_modified": "2016-05-18T20:15:10.051000Z",
+    "in_use": true,
+    "has_opinion_scraper": false,
+    "has_oral_argument_scraper": false,
+    "position": 388.0,
+    "citation_string": "Wis. Att'y Gen.",
+    "short_name": "Wisconsin Attorney General Reports",
+    "full_name": "Wisconsin Attorney General Reports",
+    "url": "https://docs.legis.wisconsin.gov/misc/oag",
+    "start_date": null,
+    "end_date": null,
+    "jurisdiction": "SAG"
+}
