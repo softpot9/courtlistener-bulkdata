@@ -248,39 +248,41 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
 def main():
     dict_citations, dict_counts = read_titles_from_csv_file(BaseConfig.CITATIONS_CSV_FILEPATH)
-    mongoclient, db = mongodb_connection()
+    newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
+    pprint(newrecord)
+    # mongoclient, db = mongodb_connection()
 
-    all_opinions_json_files = glob.glob1('bulk-data/opinions', '*.json')
-    total_opinions = len(all_opinions_json_files)
+    # all_opinions_json_files = glob.glob1('bulk-data/opinions', '*.json')
+    # total_opinions = len(all_opinions_json_files)
 
-    # 4115314 total counts
-    print('---------------------------------------')
-    print('Processing Bulk Opinions data..... Started .....')
-    cnt = 0
-    prevpercent = 0
-    curpercent = 0
-    for v in all_opinions_json_files:
-        _id = v.split('.')[0]
-        newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
-        if newrecord is None:
-            print('Error - Not found json file. skip it', _id)
-            # break
-        else:
-            db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
+    # # 4115314 total counts
+    # print('---------------------------------------')
+    # print('Processing Bulk Opinions data..... Started .....')
+    # cnt = 0
+    # prevpercent = 0
+    # curpercent = 0
+    # for v in all_opinions_json_files:
+    #     _id = v.split('.')[0]
+    #     newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
+    #     if newrecord is None:
+    #         print('Error - Not found json file. skip it', _id)
+    #         # break
+    #     else:
+    #         db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
 
-        cnt += 1
-        # Show Percent
-        curpercent = 100.0 * cnt / total_opinions
-        if curpercent - prevpercent >= 0.01:
-            print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
-            prevpercent = curpercent
-        if BaseConfig.DEBUG and cnt > BaseConfig.OPINION_LIMIT:
-            break
-    print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
-    print('Processing Bulk Opinions data..... Completed .....')
-    print('----- ISSUE COURTS -----')
-    pprint(gIssueCourts)
-    mongodb_close(mongoclient)
+    #     cnt += 1
+    #     # Show Percent
+    #     curpercent = 100.0 * cnt / total_opinions
+    #     if curpercent - prevpercent >= 0.01:
+    #         print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
+    #         prevpercent = curpercent
+    #     if BaseConfig.DEBUG and cnt > BaseConfig.OPINION_LIMIT:
+    #         break
+    # print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
+    # print('Processing Bulk Opinions data..... Completed .....')
+    # print('----- ISSUE COURTS -----')
+    # pprint(gIssueCourts)
+    # mongodb_close(mongoclient)
 
 if __name__ == "__main__":
     # tduration = datetime.datetime.utcnow()
