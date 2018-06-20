@@ -1,5 +1,6 @@
 __author__ = 'Region Star'
 import json
+import re
 from pprint import pprint
 from datetime import datetime, date
 import urllib
@@ -44,8 +45,48 @@ gIssueCourts = []
 def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     record = {
         'Reporter_Citation': '',
-                                # From "/Opinion", follow the link in the "cluster" field
-                                # within "/Cluster", print the value at "federal_cite_one"
+                            # From "/Opinion", follow the link in the "cluster" field
+                            # within "/Cluster",
+                            #
+                            # IF "neutral_cite" <> null OR ""
+                            # THEN use value at "neutral_cite"
+                            # ELSE
+                            #
+                            # IF "federal_cite_one" <> null OR ""
+                            # THEN use value at "federal_cite_one"
+                            # ELSE
+                            #
+                            # IF "federal_cite_two" <> null OR ""
+                            # THEN use value at "federal_cite_two"
+                            # ELSE
+                            #
+                            # IF "federal_cite_three" <> null OR ""
+                            # THEN use value at "federal_cite_three"
+                            # ELSE
+                            #
+                            # IF "scotus_early_cite" <> null OR ""
+                            # THEN use value at "scotus_early_cite"
+                            # ELSE
+                            #
+                            # IF "specialty_cite_one" <> null OR ""
+                            # THEN use value at "specialty_cite_one"
+                            # ELSE
+                            #
+                            # IF "state_cite_regional" <> null OR ""
+                            # THEN use value at "state_cite_regional"
+                            # ELSE
+                            #
+                            # IF "state_cite_one" <> null OR ""
+                            # THEN use value at "state_cite_one"
+                            # ELSE print, ""
+                            #
+                            # IF "state_cite_two" <> null OR ""
+                            # THEN use value at "state_cite_two"
+                            # ELSE
+                            #
+                            # IF "state_cite_three" <> null OR ""
+                            # THEN use value at "state_cite_three"
+                            # ELSE print ""
         'Data_source': 'Court Listener', # fixed value "Court Listener"
         'Court': '',
                     # From "/Opinion", follow the link in the "cluster" field
@@ -54,8 +95,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
                     # within "/Court", print the value at "full_name"
         'Title': '',
                     # From "/Opinion", follow the link in the "cluster" field
-                    # within "/Cluster", follow the link in the "docket" field
-                    # within "/Docket", print the value at "case_name"
+                    # within "/Cluster", print the value at "case_name"
         'TF_IDF_Tags': [], # leave empty
         'Searchtags': [], # leave empty
         'Duplicate': 'No', # fixed value = "No"
@@ -158,7 +198,28 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     cluster = get_jsondata_from_url(opinion['cluster'])
     if cluster is None: return None
 
-    record['Reporter_Citation'] = cluster['federal_cite_one']
+    if cluster['neutral_cite'] is not None and cluster['neutral_cite'] != "":
+        record['Reporter_Citation'] = cluster['neutral_cite']
+    elif cluster['federal_cite_one'] is not None and cluster['federal_cite_one'] != "":
+        record['Reporter_Citation'] = cluster['federal_cite_one']
+    elif cluster['federal_cite_two'] is not None and cluster['federal_cite_two'] != "":
+        record['Reporter_Citation'] = cluster['federal_cite_two']
+    elif cluster['federal_cite_three'] is not None and cluster['federal_cite_three'] != "":
+        record['Reporter_Citation'] = cluster['federal_cite_three']
+    elif cluster['scotus_early_cite'] is not None and cluster['scotus_early_cite'] != "":
+        record['Reporter_Citation'] = cluster['scotus_early_cite']
+    elif cluster['specialty_cite_one'] is not None and cluster['specialty_cite_one'] != "":
+        record['Reporter_Citation'] = cluster['specialty_cite_one']
+    elif cluster['state_cite_regional'] is not None and cluster['state_cite_regional'] != "":
+        record['Reporter_Citation'] = cluster['state_cite_regional']
+    elif cluster['state_cite_one'] is not None and cluster['state_cite_one'] != "":
+        record['Reporter_Citation'] = cluster['state_cite_one']
+    elif cluster['state_cite_two'] is not None and cluster['state_cite_two'] != "":
+        record['Reporter_Citation'] = cluster['state_cite_two']
+    elif cluster['state_cite_three'] is not None and cluster['state_cite_three'] != "":
+        record['Reporter_Citation'] = cluster['state_cite_three']
+    else:
+        record['Reporter_Citation'] = ''
 
     docket = get_jsondata_from_url(cluster['docket'])
     if docket is None: return None
@@ -171,7 +232,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     else:
         record['Court'] = court['full_name']
 
-    record['Title'] = docket['case_name']
+    record['Title'] = cluster['case_name']
 
     record['Cases_Cited_Link'] = opinion['opinions_cited']
 
@@ -192,19 +253,24 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
         record['HTMLtext'] = opinion['html_lawbox']
     elif opinion['html'] is not None and opinion['html'] != "":
         record['HTMLtext'] = opinion['html']
-    else:
+    elif opinion['plain_text'] is not None and opinion['plain_text'] != "":
         record['HTMLtext'] = opinion['plain_text']
+    else:
+        record['HTMLtext'] = ''
 
-    record['Party1'] = docket['case_name'].split("v.", 1)[0].rstrip()
+    record['Party1'] = cluster['case_name'].split("v.", 1)[0].rstrip()
 
     try:
-        record['Party2'] = docket['case_name'].split("v.", 1)[1].lstrip()
+        record['Party2'] = cluster['case_name'].split("v.", 1)[1].lstrip()
     except Exception as e:
         record['Party2'] = ''
         # print('Getting Party2 Error - not found "v." Invalid Format: ', docket['case_name'])
         # print(str(e))
 
-    record['Case_No'] = docket['docket_number']
+    if docket['docket_number'] is None or docket['docket_number'] == '':
+        record['Case_No'] = ''
+    else:
+        record['Case_No'] = '-'.join(re.findall(r'\d+', docket['docket_number']))
 
     record['Cases_Cited'] = []
     if idopinion in dict_citations:
@@ -243,46 +309,94 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
     record['Document_Level_Tags'] = ['ScrapeSource_CL', 'ScrapeDate_%s' % (datetime.now().strftime('%m%d%Y'))]
 
+    # # for only testing
+    # record['Case_Text'] = ''
+    # record['HTMLtext'] = ''
+
+    # Additional Fields - Opinion
+    record['CL_opinion_id'] = _id
+    record['CL_opinion_author_str'] = opinion['author_str']
+    record['CL_opinion_date_created'] = opinion['date_created']
+    record['CL_opinion_date_modified'] = opinion['date_modified']
+    record['CL_opinion_download_url'] = opinion['download_url']
+    record['CL_opinion_extracted_by_ocr'] = opinion['extracted_by_ocr']
+    record['CL_opinion_local_path'] = opinion['local_path']
+    record['CL_opinion_page_count'] = opinion['page_count']
+    record['CL_opinion_per_curiam'] = opinion['per_curiam']
+    record['CL_opinion_sha1'] = opinion['sha1']
+    record['CL_opinion_type'] = opinion['type']
+    record['CL_opinion_absolute_url'] = '' if 'absolute_url' not in opinion else opinion['absolute_url']
+    record['CL_opinion_resource_uri'] = '' if 'resource_uri' not in opinion else opinion['resource_uri']
+
+    # Additional Fields - Docket
+    docket['court'] = court
+    docket['assigned_to'] = None if docket['assigned_to'] is None or docket['assigned_to'] == '' else get_jsondata_from_url(docket['assigned_to'])
+    docket['referred_to'] = None if docket['referred_to'] is None or docket['referred_to'] == '' else get_jsondata_from_url(docket['referred_to'])
+
+    # Additional Fields - Cluster
+    tmp = cluster['panel']
+    cluster['panel'] = []
+    for v in tmp:
+        cluster['panel'].append(None if v is None or v == '' else get_jsondata_from_url(v))
+
+    tmp = cluster['non_participating_judges']
+    cluster['non_participating_judges'] = []
+    for v in tmp:
+        cluster['non_participating_judges'].append(None if v is None or v == '' else get_jsondata_from_url(v))
+
+    cluster['docket'] = docket
+    record['CL_opinion_cluster'] = cluster
+
+    record['CL_opinion_author'] = None if opinion['author'] is None or opinion['author'] == '' else get_jsondata_from_url(opinion['author'])
+
+    record['CL_opinion_joined_by'] = []
+    for v in opinion['joined_by']:
+        record['CL_opinion_joined_by'].append(None if v is None or v == '' else get_jsondata_from_url(v))
+
     return record
 
 
 def main():
     dict_citations, dict_counts = read_titles_from_csv_file(BaseConfig.CITATIONS_CSV_FILEPATH)
-    newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
-    pprint(newrecord)
-    # mongoclient, db = mongodb_connection()
+    # newrecord = get_record_data_by_opinion_id("197526", dict_citations, dict_counts)
+    # pprint(newrecord)
+    mongoclient, db = mongodb_connection()
 
-    # all_opinions_json_files = glob.glob1('bulk-data/opinions', '*.json')
-    # total_opinions = len(all_opinions_json_files)
+    all_opinions_json_files = glob.glob1('bulk-data/opinions', '*.json')
+    total_opinions = len(all_opinions_json_files)
 
-    # # 4115314 total counts
-    # print('---------------------------------------')
-    # print('Processing Bulk Opinions data..... Started .....')
-    # cnt = 0
-    # prevpercent = 0
-    # curpercent = 0
-    # for v in all_opinions_json_files:
-    #     _id = v.split('.')[0]
-    #     newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
-    #     if newrecord is None:
-    #         print('Error - Not found json file. skip it', _id)
-    #         # break
-    #     else:
-    #         db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
+    # 4115314 total counts
+    print('---------------------------------------')
+    print('Processing Bulk Opinions data..... Started .....')
+    cnt = 0
+    prevpercent = 0
+    curpercent = 0
+    for v in all_opinions_json_files:
+        _id = v.split('.')[0]
+        newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
+        if newrecord is None:
+            print('Error - Not found json file. skip it', _id)
+            # break
+        else:
+            if BaseConfig.DEBUG:
+                with open('result/%s.json' % _id, 'w') as fp:
+                    json.dump(newrecord, fp)
+            else:
+                db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
 
-    #     cnt += 1
-    #     # Show Percent
-    #     curpercent = 100.0 * cnt / total_opinions
-    #     if curpercent - prevpercent >= 0.01:
-    #         print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
-    #         prevpercent = curpercent
-    #     if BaseConfig.DEBUG and cnt > BaseConfig.OPINION_LIMIT:
-    #         break
-    # print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
-    # print('Processing Bulk Opinions data..... Completed .....')
-    # print('----- ISSUE COURTS -----')
-    # pprint(gIssueCourts)
-    # mongodb_close(mongoclient)
+        cnt += 1
+        # Show Percent
+        curpercent = 100.0 * cnt / total_opinions
+        if curpercent - prevpercent >= 0.01:
+            print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
+            prevpercent = curpercent
+        if BaseConfig.DEBUG and cnt > BaseConfig.OPINION_LIMIT:
+            break
+    print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
+    print('Processing Bulk Opinions data..... Completed .....')
+    print('----- ISSUE COURTS -----')
+    pprint(gIssueCourts)
+    mongodb_close(mongoclient)
 
 if __name__ == "__main__":
     # tduration = datetime.datetime.utcnow()

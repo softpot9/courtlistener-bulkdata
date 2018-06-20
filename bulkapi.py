@@ -1,14 +1,15 @@
 __author__ = 'Region Star'
 import json
 
+
 def get_jsondata_from_id(stype, _id):
     filepath = 'bulk-data/%s/%s.json' % (stype, str(_id))
     try:
-        with open(filepath) as f:
+        with open(filepath, encoding="utf8") as f:
             data = json.load(f)
         return data
     except Exception as e:
-        # print('Load JSON ERROR: ', str(e))
+        print('Load JSON ERROR: ', str(e))
         pass
     return None
 
