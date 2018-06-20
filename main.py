@@ -155,6 +155,9 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
     opinion = get_jsondata_from_id('opinions', _id)
     if opinion is None: return None
+    #if opinion['author']: print(_id, opinion['author'])
+    if len(opinion['joined_by']) > 0:
+        print(_id, opinion['joined_by'])
     cluster = get_jsondata_from_url(opinion['cluster'])
     if cluster is None: return None
 
@@ -248,41 +251,42 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
 def main():
     dict_citations, dict_counts = read_titles_from_csv_file(BaseConfig.CITATIONS_CSV_FILEPATH)
-    newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
-    pprint(newrecord)
-    # mongoclient, db = mongodb_connection()
+    #newrecord = get_record_data_by_opinion_id("4239867", dict_citations, dict_counts)
+    #pprint(newrecord)
+    mongoclient, db = mongodb_connection()
 
-    # all_opinions_json_files = glob.glob1('bulk-data/opinions', '*.json')
-    # total_opinions = len(all_opinions_json_files)
+    all_opinions_json_files = glob.glob1('bulk-data/opinions', '*.json')
+    total_opinions = len(all_opinions_json_files)
 
-    # # 4115314 total counts
-    # print('---------------------------------------')
-    # print('Processing Bulk Opinions data..... Started .....')
-    # cnt = 0
-    # prevpercent = 0
-    # curpercent = 0
-    # for v in all_opinions_json_files:
-    #     _id = v.split('.')[0]
-    #     newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
-    #     if newrecord is None:
-    #         print('Error - Not found json file. skip it', _id)
-    #         # break
-    #     else:
-    #         db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
+    # 4115314 total counts
+    print('---------------------------------------')
+    print('Processing Bulk Opinions data..... Started .....')
+    cnt = 0
+    prevpercent = 0
+    curpercent = 0
+    for v in all_opinions_json_files:
+        _id = v.split('.')[0]
+        newrecord = get_record_data_by_opinion_id(_id, dict_citations, dict_counts)
+        if newrecord is None:
+            print('Error - Not found json file. skip it', _id)
+            # break
+        else:
+            # db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
+            pass
 
-    #     cnt += 1
-    #     # Show Percent
-    #     curpercent = 100.0 * cnt / total_opinions
-    #     if curpercent - prevpercent >= 0.01:
-    #         print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
-    #         prevpercent = curpercent
-    #     if BaseConfig.DEBUG and cnt > BaseConfig.OPINION_LIMIT:
-    #         break
-    # print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
-    # print('Processing Bulk Opinions data..... Completed .....')
-    # print('----- ISSUE COURTS -----')
-    # pprint(gIssueCourts)
-    # mongodb_close(mongoclient)
+        cnt += 1
+        # Show Percent
+        curpercent = 100.0 * cnt / total_opinions
+        if curpercent - prevpercent >= 0.01:
+            print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
+            prevpercent = curpercent
+        if BaseConfig.DEBUG and cnt > BaseConfig.OPINION_LIMIT:
+            break
+    print('%.2f%s : %d/%d' % (curpercent, '%', cnt, total_opinions))
+    print('Processing Bulk Opinions data..... Completed .....')
+    print('----- ISSUE COURTS -----')
+    pprint(gIssueCourts)
+    mongodb_close(mongoclient)
 
 if __name__ == "__main__":
     # tduration = datetime.datetime.utcnow()
