@@ -14,7 +14,7 @@ from bulkapi import get_jsondata_from_id, get_jsondata_from_url
 
 
 def mydateconverter(o):
-    if isinstance(o, datetime.datetime):
+    if isinstance(o, datetime):
         return o.__str__()
 
 """
