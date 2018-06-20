@@ -24,3 +24,22 @@ def get_jsondata_from_url(url):
         tmptype = tmparr[-2]
 
     return get_jsondata_from_id(tmptype, tmpid)
+
+
+def get_jsondata_from_url_with_tablename(url, tablename):
+    data = get_jsondata_from_url(url)
+    if data is None:
+        return None
+    result = {}
+    for key, value in data.items():
+        result['CL_%s_%s' % (tablename, key)] = value
+
+    return result
+
+
+def convert_all_keys_with_tablename(data, tablename):
+    result = {}
+    for key, value in data.items():
+        result['CL_%s_%s' % (tablename, key)] = value
+
+    return result

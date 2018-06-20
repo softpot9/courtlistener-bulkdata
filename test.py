@@ -8,9 +8,8 @@ from csv_script import read_titles_from_csv_file
 
 import re
 
-s = None
-print('-'.join(re.findall(r'\d+', s)))
-
+# s = None
+# print('-'.join(re.findall(r'\d+', s)))
 
 # def get_jsondata_from_id(stype, id):
 #     filepath = 'bulk-data/%s/%s.json' % (stype, str(id))

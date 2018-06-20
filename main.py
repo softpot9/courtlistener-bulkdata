@@ -10,7 +10,7 @@ import glob
 
 from settings import BaseConfig
 from csv_script import read_titles_from_csv_file
-from bulkapi import get_jsondata_from_id, get_jsondata_from_url
+from bulkapi import get_jsondata_from_id, get_jsondata_from_url, get_jsondata_from_url_with_tablename, convert_all_keys_with_tablename
 
 
 def mydateconverter(o):
@@ -337,29 +337,29 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
     record['CL_opinion_resource_uri'] = '' if 'resource_uri' not in opinion else opinion['resource_uri']
 
     # Additional Fields - Docket
-    docket['court'] = court
-    docket['assigned_to'] = None if docket['assigned_to'] is None or docket['assigned_to'] == '' else get_jsondata_from_url(docket['assigned_to'])
-    docket['referred_to'] = None if docket['referred_to'] is None or docket['referred_to'] == '' else get_jsondata_from_url(docket['referred_to'])
+    docket['court'] = convert_all_keys_with_tablename(court, 'court')
+    docket['assigned_to'] = None if docket['assigned_to'] is None or docket['assigned_to'] == '' else get_jsondata_from_url_with_tablename(docket['assigned_to'], 'person')
+    docket['referred_to'] = None if docket['referred_to'] is None or docket['referred_to'] == '' else get_jsondata_from_url_with_tablename(docket['referred_to'], 'person')
 
     # Additional Fields - Cluster
     tmp = cluster['panel']
     cluster['panel'] = []
     for v in tmp:
-        cluster['panel'].append(None if v is None or v == '' else get_jsondata_from_url(v))
+        cluster['panel'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
 
     tmp = cluster['non_participating_judges']
     cluster['non_participating_judges'] = []
     for v in tmp:
-        cluster['non_participating_judges'].append(None if v is None or v == '' else get_jsondata_from_url(v))
+        cluster['non_participating_judges'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
 
-    cluster['docket'] = docket
-    record['CL_opinion_cluster'] = cluster
+    cluster['docket'] = convert_all_keys_with_tablename(docket, 'docket')
+    record['CL_opinion_cluster'] = convert_all_keys_with_tablename(cluster, 'cluster')
 
-    record['CL_opinion_author'] = None if opinion['author'] is None or opinion['author'] == '' else get_jsondata_from_url(opinion['author'])
+    record['CL_opinion_author'] = None if opinion['author'] is None or opinion['author'] == '' else get_jsondata_from_url_with_tablename(opinion['author'], 'person')
 
     record['CL_opinion_joined_by'] = []
     for v in opinion['joined_by']:
-        record['CL_opinion_joined_by'].append(None if v is None or v == '' else get_jsondata_from_url(v))
+        record['CL_opinion_joined_by'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
 
     return record
 
