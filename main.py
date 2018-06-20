@@ -195,6 +195,9 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
     opinion = get_jsondata_from_id('opinions', _id)
     if opinion is None: return None
+    # if opinion['author']: print(_id, opinion['author'])
+    # if len(opinion['joined_by']) > 0:
+    #     print(_id, opinion['joined_by'])
     cluster = get_jsondata_from_url(opinion['cluster'])
     if cluster is None: return None
 
