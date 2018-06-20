@@ -323,7 +323,7 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
     # Additional Fields - Opinion
     record['CL_opinion_id'] = _id
-    record['CL_opinion_author_str'] = opinion['author_str']
+    record['CL_opinion_author_str'] = '' if 'author_str' not in opinion else opinion['author_str']
     record['CL_opinion_date_created'] = opinion['date_created']
     record['CL_opinion_date_modified'] = opinion['date_modified']
     record['CL_opinion_download_url'] = opinion['download_url']
