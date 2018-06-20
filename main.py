@@ -12,6 +12,11 @@ from settings import BaseConfig
 from csv_script import read_titles_from_csv_file
 from bulkapi import get_jsondata_from_id, get_jsondata_from_url
 
+
+def mydateconverter(o):
+    if isinstance(o, datetime.datetime):
+        return o.__str__()
+
 """
     MongoDB database connection and close
 """
@@ -384,7 +389,7 @@ def main():
         else:
             if BaseConfig.DEBUG:
                 with open('result/%s.json' % _id, 'w') as fp:
-                    json.dump(newrecord, fp)
+                    json.dump(newrecord, fp, default=mydateconverter)
             else:
                 db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
 
