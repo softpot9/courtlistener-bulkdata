@@ -361,13 +361,9 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
 def main():
     dict_citations, dict_counts = read_titles_from_csv_file(BaseConfig.CITATIONS_CSV_FILEPATH)
-<<<<<<< HEAD
     # newrecord = get_record_data_by_opinion_id("197526", dict_citations, dict_counts)
     # pprint(newrecord)
-=======
-    #newrecord = get_record_data_by_opinion_id("4239867", dict_citations, dict_counts)
-    #pprint(newrecord)
->>>>>>> d7e8fc630eec8d985bd30faf21f1408aabce107a
+
     mongoclient, db = mongodb_connection()
 
     all_opinions_json_files = glob.glob1('bulk-data/opinions', '*.json')
@@ -386,16 +382,11 @@ def main():
             print('Error - Not found json file. skip it', _id)
             # break
         else:
-<<<<<<< HEAD
             if BaseConfig.DEBUG:
                 with open('result/%s.json' % _id, 'w') as fp:
                     json.dump(newrecord, fp)
             else:
                 db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
-=======
-            # db[BaseConfig.MONGODB_COLLECTION].insert(newrecord)
-            pass
->>>>>>> d7e8fc630eec8d985bd30faf21f1408aabce107a
 
         cnt += 1
         # Show Percent
