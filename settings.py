@@ -5,7 +5,7 @@ import sys
 
 
 class BaseConfig(object):
-    DEBUG = True
+    DEBUG = False
     CSV_ITEM_LIMIT = 99999999
     OPINION_LIMIT = 1000
 
