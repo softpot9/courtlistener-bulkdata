@@ -338,28 +338,34 @@ def get_record_data_by_opinion_id(_id, dict_citations, dict_counts):
 
     # Additional Fields - Docket
     docket['court'] = convert_all_keys_with_tablename(court, 'court')
-    docket['assigned_to'] = None if docket['assigned_to'] is None or docket['assigned_to'] == '' else get_jsondata_from_url_with_tablename(docket['assigned_to'], 'person')
-    docket['referred_to'] = None if docket['referred_to'] is None or docket['referred_to'] == '' else get_jsondata_from_url_with_tablename(docket['referred_to'], 'person')
+    if 'assigned_to' in docket:
+        docket['assigned_to'] = None if docket['assigned_to'] is None or docket['assigned_to'] == '' else get_jsondata_from_url_with_tablename(docket['assigned_to'], 'person')
+    if 'referred_to' in docket:
+        docket['referred_to'] = None if docket['referred_to'] is None or docket['referred_to'] == '' else get_jsondata_from_url_with_tablename(docket['referred_to'], 'person')
 
     # Additional Fields - Cluster
-    tmp = cluster['panel']
-    cluster['panel'] = []
-    for v in tmp:
-        cluster['panel'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
+    if 'panel' in cluster:
+        tmp = cluster['panel']
+        cluster['panel'] = []
+        for v in tmp:
+            cluster['panel'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
 
-    tmp = cluster['non_participating_judges']
-    cluster['non_participating_judges'] = []
-    for v in tmp:
-        cluster['non_participating_judges'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
+    if 'non_participating_judges' in cluster:
+        tmp = cluster['non_participating_judges']
+        cluster['non_participating_judges'] = []
+        for v in tmp:
+            cluster['non_participating_judges'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
 
     cluster['docket'] = convert_all_keys_with_tablename(docket, 'docket')
     record['CL_opinion_cluster'] = convert_all_keys_with_tablename(cluster, 'cluster')
 
-    record['CL_opinion_author'] = None if opinion['author'] is None or opinion['author'] == '' else get_jsondata_from_url_with_tablename(opinion['author'], 'person')
+    if 'author' in opinion:
+        record['CL_opinion_author'] = None if opinion['author'] is None or opinion['author'] == '' else get_jsondata_from_url_with_tablename(opinion['author'], 'person')
 
-    record['CL_opinion_joined_by'] = []
-    for v in opinion['joined_by']:
-        record['CL_opinion_joined_by'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
+    if 'joined_by' in opinion:
+        record['CL_opinion_joined_by'] = []
+        for v in opinion['joined_by']:
+            record['CL_opinion_joined_by'].append(None if v is None or v == '' else get_jsondata_from_url_with_tablename(v, 'person'))
 
     return record
 
